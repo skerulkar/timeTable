@@ -1,0 +1,12 @@
+.center {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;  
+}
+.inputField {
+    margin : 15px 0;
+}
+.profList {
+    margin-top: 15px;
+}

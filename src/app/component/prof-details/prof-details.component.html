@@ -1,0 +1,75 @@
+<div class="pt-3 pb-2 mb-3 border-bottom">
+    <h2 class="h2">Add Professor</h2>
+</div>
+<form [formGroup]="profForm" class="form-horizontal" (ngSubmit)="addProf(profForm)" novalidate>
+    <div class="row">
+        <div class="col-lg-5 col-md-12 col-sm-12">
+            <div class="row">
+
+                <div class="col-md-12 mb-3">
+                    <label>Professor Name:</label>
+                    <input type="text" formControlName="name" class="form-control" required>
+                    <!-- errors-->
+                    <p *ngIf="name?.touched && name?.invalid" class="error"><sup>*</sup>Please enter Professor Name
+                    </p>
+                    <p *ngIf="name?.errors?.minlength" class="error"><sup>*</sup>Professor Name shouldn't be less than 2 words</p>
+                </div>
+        
+                <div class="col-md-12 mb-3">
+                    <label>Subject:</label>
+                    <input type="text" formControlName="subject" class="form-control" required>
+
+                    <p *ngIf="subject?.touched && subject?.invalid" class="error"><sup>*</sup>Please enter Subject
+                    </p>
+                    <p *ngIf="subject?.errors?.minlength" class="error"><sup>*</sup>Subject shouldn't be less than 2 words</p>
+                
+                </div>
+        
+            </div>
+        </div>
+    </div>
+    <p class="form-group">Complete the form to enable button.</p>
+    <div class="form-group text-right">
+        <button type="button" class="btn btn-secondary gap-right" (click)="ResetForm()">Reset</button>
+        <button type="submit" class="btn btn-success" [disabled]="!profForm.valid">Add Professor</button>
+    </div>
+</form>
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h2 class="h2">Professors List</h2>
+</div>
+  
+<div class="pricing-header mx-auto">
+
+    <div class="no-data text-center" *ngIf="noData">
+        <p class="nodata-msg">No prfessor added yet!</p>
+    </div>
+  
+    <div class="table-responsive" *ngIf="hideWhenNoProfessor">
+      <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg">
+        <thead>
+          <tr>
+            <th>Professor ID</th>
+            <th>Professor Name</th>
+            <th>Subject</th>
+            <th class="text-center" scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let prof of Professor; let i = index">
+                <td scope="row">{{i+1}}</td>
+                <td>{{prof.name}}</td>
+                <td>{{prof.subject}}</td>
+                <td class="text-center action-block">
+                    <span class="btn btn-outline-danger btn-sm" (click)="onDeleteRow(prof)">Delete</span>
+                </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class='btn-center' *ngIf="hideWhenNoProfessor">
+        <button class="text-center btn btn-success" routerLink="/time-details">Next >></button>
+    </div>
+    
+</div>

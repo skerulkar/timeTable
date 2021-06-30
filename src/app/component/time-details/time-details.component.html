@@ -1,0 +1,102 @@
+<div *ngIf="editclicked">
+    <div class="pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h2">Add Time Slot</h2>
+    </div>
+    
+    <form [formGroup]="timeSlotForm" class="form-horizontal" (ngSubmit)="setTimeSlot(timeSlotForm.value)" novalidate>
+        <div class="row">
+            <div class="col-lg-5 col-md-12 col-sm-12">
+                <div class="row">
+                    <input formControlName="$key" hidden>
+                    <div class="col-md-12 mb-3 md-form">
+                        <label for="input_startTime">Start Time:</label>
+                        <input placeholder="Start time" type="time" id="input_starttime" formControlName="startTime" class="form-control timepicker" required>
+                        <!-- errors-->
+                        <p *ngIf="controls.startTime?.touched && controls.startTime?.invalid" class="error"><sup>*</sup>Please enter Start Time
+                        </p>
+                    </div>
+                    <div class="col-md-12 mb-3 md-form">
+                        <label for="input_endTime">End Time:</label>
+                        <input placeholder="End time" type="time" id="input_endTime" formControlName="endTime" class="form-control timepicker" required>
+                        
+                        <!-- errors-->
+                        <p *ngIf="controls.endTime?.touched && controls.endTime?.invalid" class="error"><sup>*</sup>Please enter End Time
+                        </p>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Slot Duration (in Min):</label>
+                        <input type="text" formControlName="slotDuration" maxlength="2" class="form-control" required>
+                        <!-- errors-->
+                        <p *ngIf="controls.slotDuration?.touched && controls.slotDuration?.invalid" class="error"><sup>*</sup>Please enter Slot Duration
+                        </p>
+                        <div *ngIf="controls.slotDuration?.errors?.pattern">Enter only number.</div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Break Start Time:</label>
+                        <input type="time" formControlName="BreakFrom" class="form-control timepicker" required>
+                        <!-- errors-->
+                        <p *ngIf="controls.BreakFrom?.touched && controls.BreakFrom?.invalid" class="error"><sup>*</sup>Please enter Break Start Time
+                        </p>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Break End Time:</label>
+                        <input type="time" formControlName="BreakTo" class="form-control timepicker" required>
+                        <!-- errors-->
+                        <p *ngIf="controls.BreakTo?.touched && controls.BreakTo?.invalid" class="error"><sup>*</sup>Please enter Break End Time
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <p class="form-group">Complete the form to enable button.</p>
+        <div class="form-group text-right">
+            <button type="button" class="btn btn-secondary gap-right" (click)="ResetForm()">Reset</button>
+            <button type="submit" *ngIf="!editclicked" class="btn btn-success" [disabled]="!timeSlotForm.valid">Add Time slots</button>
+            <button *ngIf="editclicked" class="btn btn-success" [disabled]="!timeSlotForm.valid" (click)="updateSlot(timeSlotForm.value)">Update Time slots</button>
+        </div>
+    </form>
+</div>
+<div *ngIf="!editclicked">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h2">Time slot</h2>
+    </div>
+
+
+    <div class="pricing-header mx-auto">
+
+        <div class="no-data text-center" *ngIf="!hideWhenNoData">
+            <p class="nodata-msg">No Timeslot added yet!</p>
+        </div>
+    
+        <div class="table-responsive" *ngIf="hideWhenNoData">
+        <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg">
+            <thead>
+                <tr>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Duration</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let time of timeDetails">
+                    <td scope="row">{{time.startTime}}</td>
+                    <td>{{time.endTime}}</td>
+                    <td>{{time.slotDuration}}</td>
+                    <td class="text-center action-block">
+                        <span class="btn btn-outline-danger btn-sm" (click)="editSlot()">Edit</span>
+                        <!-- <span class="btn btn-outline-danger btn-sm" (click)="deleteSlot(time.$key)">Delete</span> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+            <div class='btn-center'>
+                <button class="text-center btn btn-success backButton" routerLink="/prof-details"><< back </button>
+                <button class="text-center btn btn-success" routerLink="/timeTable">Next >></button>
+            </div>
+        </div>
+        
+    </div>
+</div>
