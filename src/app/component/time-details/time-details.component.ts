@@ -34,6 +34,8 @@ export class TimeDetailsComponent implements OnInit {
 
   ResetForm() {
     this.timeSlotForm.reset();
+    // this.crudService.delSlot();
+    // this.removedSlots = false;
   }
 
   setTimeSlot(timeSlotForm:any) {

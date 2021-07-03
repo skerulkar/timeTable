@@ -71,9 +71,9 @@ export class CrudService {
     }
   }
 
-  // delSlot(id: string) { 
-  //   this.timeSlotRef = this.db.object('time-data/'+id);
-  //   this.timeSlotRef.remove();
-  // }
+  delSlot() { 
+    this.timeSlotsRef = this.db.list('time-data');
+    this.timeSlotsRef.remove();
+  }
   
 }

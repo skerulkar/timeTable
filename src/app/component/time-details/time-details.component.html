@@ -51,7 +51,7 @@
         </div>
         <p class="form-group">Complete the form to enable button.</p>
         <div class="form-group text-right">
-            <button type="button" class="btn btn-secondary gap-right" (click)="ResetForm()">Reset</button>
+            <button type="button" *ngIf="!editclicked" class="btn btn-secondary gap-right" (click)="ResetForm()">Reset</button>
             <button type="submit" *ngIf="!editclicked" class="btn btn-success" [disabled]="!timeSlotForm.valid">Add Time slots</button>
             <button *ngIf="editclicked" class="btn btn-success" [disabled]="!timeSlotForm.valid" (click)="updateSlot(timeSlotForm.value)">Update Time slots</button>
         </div>

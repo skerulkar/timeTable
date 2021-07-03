@@ -10,7 +10,7 @@
                     <label>Professor Name:</label>
                     <input type="text" formControlName="name" class="form-control" required>
                     <!-- errors-->
-                    <p *ngIf="name?.touched && name?.invalid" class="error"><sup>*</sup>Please enter Professor Name
+                    <p *ngIf="name?.touched && name?.errors?.required" class="error"><sup>*</sup>Please enter Professor Name
                     </p>
                     <p *ngIf="name?.errors?.minlength" class="error"><sup>*</sup>Professor Name shouldn't be less than 2 words</p>
                 </div>
@@ -19,7 +19,7 @@
                     <label>Subject:</label>
                     <input type="text" formControlName="subject" class="form-control" required>
 
-                    <p *ngIf="subject?.touched && subject?.invalid" class="error"><sup>*</sup>Please enter Subject
+                    <p *ngIf="subject?.touched && subject?.errors?.required" class="error"><sup>*</sup>Please enter Subject
                     </p>
                     <p *ngIf="subject?.errors?.minlength" class="error"><sup>*</sup>Subject shouldn't be less than 2 words</p>
                 
@@ -31,7 +31,7 @@
     <p class="form-group">Complete the form to enable button.</p>
     <div class="form-group text-right">
         <button type="button" class="btn btn-secondary gap-right" (click)="ResetForm()">Reset</button>
-        <button type="submit" class="btn btn-success" [disabled]="!profForm.valid">Add Professor</button>
+        <button type="submit" class="btn btn-success" [disabled]="profForm.invalid">Add Professor</button>
     </div>
 </form>
 
