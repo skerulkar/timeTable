@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CrudService } from 'src/app/shared/crud.service';
 import { Professor } from 'src/app/shared/professor';
 import { TimeDetails } from 'src/app/shared/time-details';
+import { ToastrService } from 'ngx-toastr';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
@@ -20,7 +21,8 @@ export class TimetableComponent implements OnInit {
   professor: Professor[] = [];
   timeDetails: TimeDetails[] = [];
   allowedRepeatation:any = 2;
-  constructor(private crudService: CrudService) { }
+  errorShow: boolean = false;
+  constructor(private crudService: CrudService,private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.fetchProfessorData();
@@ -64,8 +66,11 @@ export class TimetableComponent implements OnInit {
       for (let a=1; a < 50 ;  a++) {
         let temp1;
         if(temp <= endTime) {
-          if (temp >= BreakFrom && temp < BreakTo) {
+          if (temp == BreakFrom) {
             temp1 = BreakTo;
+          } else if (temp > BreakFrom && temp < BreakTo) {
+            this.errorShow = true;
+            break;
           } else {
             temp1 = temp + slotDuration;
           }
@@ -95,31 +100,25 @@ export class TimetableComponent implements OnInit {
             teachername={
               $key: "-1",
               name: "Break",
-              subject: ""};
+              subject: ""
+            };
           }
           this.oneDayArr.push(teachername);
         }
         this.TeacherArr.push(this.oneDayArr);
-        console.log(this.TeacherArr)
       }
+      console.log(this.TeacherArr);
     }
   }
 
   shuffle(array:any) {
     let currentIndex = array.length,  randomIndex;
-  
-    // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-  
-      // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
-  
-      // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
-  
     return array;
   }
   checkDuplicateValue(teachername:any) {
